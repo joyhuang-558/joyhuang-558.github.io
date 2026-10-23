@@ -66,7 +66,7 @@ footer{margin:72px 0 60px;padding-top:24px;border-top:1px solid var(--line);font
 <table>
 <thead><tr><th>来源</th><th>拿到什么</th></tr></thead>
 <tbody>
-<tr><td>自进化 / cross-validation 防过拟合的工作 <span style="color:var(--muted)">[引用待对齐]</span></td><td>进化器会对"它看得见的数据"过拟合 → 必须 <b>A/B/C split</b>:A 学习、B held-out 选择、C 最终 untouched</td></tr>
+<tr><td><b>False Frontiers</b>:Diagnosing Co-Cheating in Self-Evolving Search Agents（CrossFit,<a href="https://arxiv.org/abs/2609.39102">arXiv 2609.39102</a>）</td><td>揭示自进化里 <b>proposer ↔ solver 会互相强化错误</b>(co-cheating / 对彼此过拟合);CrossFit 用交叉验证式 held-out 解决 → 我们据此做 <b>A/B/C split</b>:A 学习、B held-out 选择、C 最终 untouched,让进化器<b>看不见用来评判它的数据</b></td></tr>
 <tr><td>GEPA（reflective prompt evolution）</td><td>用"反思 + 诊断-再改",不盲改</td></tr>
 <tr><td>Harness² / Meta-Harness / Better-Harness 类</td><td>executor 要有版本控制;历史改动当材料喂给进化器</td></tr>
 <tr><td>开源小模型前沿分析</td><td>小模型<b>吃机制不吃劝导</b> → 把知识变成工具/检查,而不是长 prompt</td></tr>
