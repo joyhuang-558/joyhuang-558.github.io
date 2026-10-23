@@ -99,16 +99,16 @@ footer{margin:72px 0 60px;padding-top:24px;border-top:1px solid var(--line);font
 <div class="note">一个诚实的细节:h1 带了"头条诊断 + 一堆副改动"。事后看,涨分<b>主要来自那些不起眼的副机制</b>(执行 fallback、提交前检查),而不是头条诊断本身 —— 6 个预测修复只确认了 2 个。这条也成了后续迭代的教训。</div>
 
 <h2><span class="n">5</span>看 e0 的 trace → e1</h2>
-<p>读 e0 的进化轨迹,发现进化器"手里的信息太薄":它只看得到模型输出 + shell 结果,<b>看不到 harness 自己的干预</b>(gate 到底拦了没有);没有统一的打分口径;预算也不透明。</p>
-<p><b>e1 = 三个改动</b>(都在"给进化器更好的材料"这一层):</p>
+<p>不是凭直觉 —— 是逐条读 e0 的 GLM 进化轨迹,看到三个<b>具体</b>问题,对应三个改动(= e1):</p>
 <table>
-<thead><tr><th>改动</th><th>为什么</th></tr></thead>
+<thead><tr><th>trace 里具体看到</th><th>改动</th></tr></thead>
 <tbody>
-<tr><td>预算 banner + 更多时间</td><td>让进化器知道"还剩多少步",在截断前主动收尾</td></tr>
-<tr><td><b>把全部 A 轨迹喂进去</b></td><td>进化器用自己的 shell 去读每道 A 题的完整轨迹(通过/失败都给),自己挖规律</td></tr>
-<tr><td>scoring 契约</td><td>统一打分口径,别让它凭感觉</td></tr>
+<tr><td>GLM session 经常<b>跑到步数/时间上限还没提交</b> —— 预算全花在探索上,最后被截断、没产出干净候选</td><td>加一条<b>实时预算 banner</b>(还剩几步 / 几分钟),逼它在截断前收尾提交 + 给更多时间</td></tr>
+<tr><td>喂给 GLM 的是<b>压缩过的轨迹摘要</b>,诊断很泛 —— 看不到每道题到底怎么 fail 的</td><td>把<b>全部 A 题的完整未截断轨迹</b>拷进沙箱,GLM 用自己的 shell(<code>cat</code>/<code>grep</code>/<code>python</code>)去挖</td></tr>
+<tr><td>GLM 花大量 reasoning 在<b>猜"judge 到底怎么打分"</b>。trace 原话:<br>· <i>"does the grader really compare positionally?"</i><br>· <i>"how does the grader actually compare?"</i><br>· <i>"does the grader score an erroring SQL as 0?"</i></td><td>给一份 <b>scoring 契约</b>(口径:EX / Soft-F1 怎么算、报错怎么判),它不用再靠猜</td></tr>
 </tbody>
 </table>
+<div class="note"><b>为什么不直接把 grader 的 python 丢给它?</b>两点:(1) grader 要读 gold 答案,给它 = <b>泄漏</b>;(2) 给了精确实现,它会去<b>迎合那套比较规则(gaming the grader)</b>,而不是产出真正正确的 SQL。所以只给<b>口径(prose)</b> —— 让它知道按什么标准评,但具体边界仍要自己推。这是刻意的。</div>
 
 <h2><span class="n">6</span>看 e1 的 trace → e2（做错题的问题）</h2>
 <p>再读 e1 的轨迹,发现一个更隐蔽的问题:<b>h0→h1 涨了分,但同时把一些本来做对的题改坏了</b> —— gate 的"一刀切"检查在过度纠正(假阳性)。净涨分掩盖了这些回归。</p>
