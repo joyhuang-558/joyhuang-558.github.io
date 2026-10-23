@@ -422,9 +422,9 @@
 
     <!-- 1 基础架构 -->
     <section class="slide">
-      <header><div class="eyebrow">Architecture</div></header>
+      <header><div class="eyebrow">架构</div></header>
       <main>
-        <h2>基础架构：两个角色，一条不可逾越的链路</h2>
+        <h2>基本架构：evolver 和 executor</h2>
         <div class="formula" style="margin-top:16px">human  ──►  evolver  ──►  executor
 (改方法)    (GLM，改 harness)   (qwen，干活)</div>
         <div class="timeline">
@@ -450,9 +450,9 @@
 
     <!-- 2 过渡：先定义 evolver -->
     <section class="slide">
-      <header><div class="eyebrow">Transition</div></header>
+      <header><div class="eyebrow">调研</div></header>
       <main style="display:grid; align-content:center; gap:28px;">
-        <h2>要先定义好 init evolver — 所以先做调研</h2>
+        <h2>先定义 init evolver，再做调研</h2>
         <div style="display:flex; gap:14px; flex-wrap:wrap;">
           <span class="tag blue" style="height:38px; font-size:16px; padding:0 18px;">三个 harness 项目</span>
           <span class="tag amber" style="height:38px; font-size:16px; padding:0 18px;">三篇 blog</span>
@@ -464,9 +464,9 @@
 
     <!-- 3 三个 harness 项目 -->
     <section class="slide">
-      <header><div class="eyebrow">Research · 1/3</div></header>
+      <header><div class="eyebrow">调研 · 1/3</div></header>
       <main>
-        <h2>三个 harness 项目：各自怎么定义 evolver</h2>
+        <h2>三个 harness 项目怎么定义 evolver</h2>
         <div class="table" style="margin-top:14px">
           <div class="row head" style="grid-template-columns: 0.85fr 1.5fr 1.2fr;"><div class="cell">项目</div><div class="cell">是什么</div><div class="cell">我们拿到什么</div></div>
           <div class="row" style="grid-template-columns: 0.85fr 1.5fr 1.2fr;"><div class="cell"><b>Harness²</b><br><span style="font-size:12px; color:var(--muted)">Google Cloud AI Research + Northwestern · <a href="https://github.com/google-research/harness2">github</a></span></div><div class="cell">递归进化 agent 的"执行 harness"（prompt/工具/scaffolding），<b>模型冻结、不训练</b>；冻结模型上 <b>+11.8 分</b></div><div class="cell">我们采用的总范式：<b>进化 harness，不动模型</b></div></div>
@@ -480,7 +480,7 @@
 
     <!-- 4 三篇 blog -->
     <section class="slide">
-      <header><div class="eyebrow">Research · 2/3</div></header>
+      <header><div class="eyebrow">调研 · 2/3</div></header>
       <main>
         <h2>三篇 blog 的 takeaway</h2>
         <div class="table" style="margin-top:14px">
@@ -495,7 +495,7 @@
 
     <!-- 5 CrossFit paper -->
     <section class="slide">
-      <header><div class="eyebrow">Research · 3/3 · CrossFit</div></header>
+      <header><div class="eyebrow">调研 · 3/3 · CrossFit</div></header>
       <main>
         <h2>False Frontiers：Diagnosing Co-Cheating in Self-Evolving Search Agents</h2>
         <p style="margin-top:6px"><a href="https://arxiv.org/abs/2609.39102">arXiv 2609.39102</a></p>
@@ -519,7 +519,7 @@
 
     <!-- 6 A/B/C split -->
     <section class="slide">
-      <header><div class="eyebrow">Init evolver</div></header>
+      <header><div class="eyebrow">初始结构</div></header>
       <main>
         <h2>初始结构 = A / B / C split</h2>
         <div class="grid" style="margin-top:16px">
@@ -545,7 +545,7 @@
     <section class="slide">
       <header><div class="eyebrow">e0 · h0 → h1</div></header>
       <main>
-        <h2>h0 → h1：第一次进化</h2>
+        <h2>e0：h0 → h1</h2>
         <div class="grid two" style="margin-top:14px; align-items:start;">
           <div class="card">
             <h3>诊断：输出 shape 问题</h3>
@@ -567,16 +567,16 @@
           </div>
         </div>
         <div class="metric"><strong>79.78 → ~86</strong><span>split B EX（corrected gold）</span></div>
-        <div class="callout warn" style="margin-top:8px"><b>诚实注：</b>涨分主要来自不起眼的副机制（执行 fallback、提交前检查），不是头条诊断 —— 6 个预测修复只确认了 2 个。</div>
+        <div class="callout warn" style="margin-top:8px"><b>注：</b>涨分主要来自副机制（执行 fallback、提交前检查），不是头条诊断 —— 6 个预测修复只确认了 2 个。</div>
       </main>
       <footer class="footerline"><span>h0 → h1</span><div class="progress"><div class="bar"></div></div><span class="counter"></span></footer>
     </section>
 
     <!-- 8 数据有问题 (BIRD) -->
     <section class="slide">
-      <header><div class="eyebrow">Data · BIRD</div></header>
+      <header><div class="eyebrow">数据 · BIRD</div></header>
       <main>
-        <h2>数据有问题（BIRD）：原版 gold ~70 处标注错误</h2>
+        <h2>BIRD 数据：原版 gold ~70 处标注错误</h2>
         <div class="table" style="margin-top:14px">
           <div class="row head" style="grid-template-columns: 1fr 1.6fr;"><div class="cell">类型</div><div class="cell">例子</div></div>
           <div class="row" style="grid-template-columns: 1fr 1.6fr;"><div class="cell"><b>gold SQL 本身错</b></div><div class="cell">q1500 对一个<b>不存在的时段</b>查询，gold 却返回 <b>976 行</b>数据</div></div>
@@ -589,9 +589,9 @@
 
     <!-- 9 冲击 + 修正 -->
     <section class="slide">
-      <header><div class="eyebrow">Data · 修正</div></header>
+      <header><div class="eyebrow">数据 · 修正</div></header>
       <main>
-        <h2>冲击 + 修正</h2>
+        <h2>标注错误的影响，改用 corrected gold</h2>
         <div class="callout warn" style="margin-top:16px; font-size:clamp(16px,1.35vw,21px)"><b>在原版（错标）gold 上，Opus ≈ qwen。</b>标注错误把<b>所有</b>模型都封顶，能力差异被抹平。</div>
         <div class="callout ok" style="margin-top:16px; font-size:clamp(16px,1.35vw,21px)">改用 <b>Arcwise-Plat corrected gold</b>（498 题修正版）。只有在 corrected gold 上模型能力才显出来 —— <b>后面所有分数都是 corrected。</b></div>
       </main>
@@ -602,7 +602,7 @@
     <section class="slide">
       <header><div class="eyebrow">e0 trace → e1</div></header>
       <main>
-        <h2>读 e0 的 trace → e1：三个具体问题，三个改动</h2>
+        <h2>e0 trace → e1：三个问题，三个改动</h2>
         <div class="table" style="margin-top:14px">
           <div class="row head" style="grid-template-columns: 1.15fr 1fr;"><div class="cell">trace 里具体看到</div><div class="cell">改动</div></div>
           <div class="row" style="grid-template-columns: 1.15fr 1fr;"><div class="cell">session 跑到预算上限还没提交 —— 全花在探索，被截断没产出干净候选</div><div class="cell"><b>实时预算 banner</b>（还剩几步/几分钟）+ 给更多时间</div></div>
@@ -619,8 +619,8 @@
     <section class="slide">
       <header><div class="eyebrow">e1 trace → e2</div></header>
       <main>
-        <h2>读 e1 的 trace → e2：做错题的问题</h2>
-        <div class="callout warn" style="margin-top:14px"><b>发现：</b>h0→h1 涨了分，但同时把一些<b>本来做对的题改坏了</b> —— gate 的一刀切检查在过度纠正（假阳性）。净涨分掩盖了这些回归。</div>
+        <h2>e1 trace → e2：改坏了本来做对的题</h2>
+        <div class="callout warn" style="margin-top:14px">h0→h1 涨了分，但同时把一些<b>本来做对的题改坏了</b> —— gate 的一刀切检查在过度纠正（假阳性），净涨分掩盖了这些回归。</div>
         <div class="grid two" style="margin-top:16px; align-items:start;">
           <div class="card">
             <h3>e2 = 回归集材料</h3>
@@ -643,9 +643,9 @@
 
     <!-- 10 总览 + headroom -->
     <section class="slide">
-      <header><div class="eyebrow">Overview · headroom</div></header>
+      <header><div class="eyebrow">结果 · headroom</div></header>
       <main>
-        <h2>总览：一次性涨分后 plateau，headroom 小</h2>
+        <h2>结果：h1 后 plateau，headroom 小</h2>
         <div class="grid two" style="margin-top:12px; align-items:center;">
           <img src="./bird_evolve_chart.png" alt="BIRD evolver e0/e1/e2 vs harness iteration" style="width:100%; border:1px solid var(--line); border-radius:8px; background:#fff; padding:6px; box-shadow:var(--shadow);" />
           <div>
@@ -665,9 +665,9 @@
 
     <!-- 11 Discussion - safety -->
     <section class="slide">
-      <header><div class="eyebrow">Discussion · Safety</div></header>
+      <header><div class="eyebrow">讨论 · 安全</div></header>
       <main>
-        <h2>Discussion — safety</h2>
+        <h2>安全：leaking 与联网</h2>
         <div class="grid two" style="margin-top:16px; align-items:start;">
           <div class="card">
             <h3>(a) Leaking 防护</h3>
