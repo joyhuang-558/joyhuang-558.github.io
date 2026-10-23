@@ -443,7 +443,7 @@
             <p>小模型的 harness：prompt / 工具 / 循环 / 上下文 / 提交逻辑。只有 evolver 能改。</p>
           </div>
         </div>
-        <div class="callout" style="margin-top:18px"><b>人想让小模型更好，唯一途径是改进进化器。</b>　固定底座不进化（保可比 &amp; 安全）：模型 id · 每题预算上限（call 数 / wall time）· 沙箱。</div>
+        <div class="callout" style="margin-top:18px"><b>人想让小模型更好，唯一途径是改进进化器。</b></div>
       </main>
       <footer class="footerline"><span>基础架构</span><div class="progress"><div class="bar"></div></div><span class="counter"></span></footer>
     </section>
@@ -452,12 +452,8 @@
     <section class="slide">
       <header><div class="eyebrow">调研</div></header>
       <main style="display:grid; align-content:center; gap:28px;">
-        <h2>先定义 init evolver，再做调研</h2>
-        <div style="display:flex; gap:14px; flex-wrap:wrap;">
-          <span class="tag blue" style="height:38px; font-size:16px; padding:0 18px;">三个 harness 项目</span>
-          <span class="tag amber" style="height:38px; font-size:16px; padding:0 18px;">三篇 blog</span>
-          <span class="tag violet" style="height:38px; font-size:16px; padding:0 18px;">CrossFit paper</span>
-        </div>
+        <h2>调研现有的 evolver</h2>
+        <p style="font-size:20px; color:#64748b; max-width:720px;">在定义我们自己的 init evolver 之前，先看现有的自进化 harness 工作。</p>
       </main>
       <footer class="footerline"><span>调研</span><div class="progress"><div class="bar"></div></div><span class="counter"></span></footer>
     </section>
@@ -473,7 +469,6 @@
           <div class="row" style="grid-template-columns: 0.85fr 1.5fr 1.2fr;"><div class="cell"><b>Meta-Harness</b><br><span style="font-size:12px; color:var(--muted)">Stanford IRIS Lab · <a href="https://arxiv.org/abs/2603.28052">arXiv 2603.28052</a></span></div><div class="cell">对"固定模型外面那层 harness"做<b>自动搜索</b> —— 存什么 / 取什么 / 给模型看什么（context 管理）</div><div class="cell">启发我们的 <b>context 管理</b> + 把全轨迹当材料</div></div>
           <div class="row" style="grid-template-columns: 0.85fr 1.5fr 1.2fr;"><div class="cell"><b>Better-Harness</b></div><div class="cell">多维度评估 coding-agent workflow，把 project/session 证据变成 <b>evidence-bounded、scoped 的修复</b></div><div class="cell">启发"从证据诊断、只做有据的定向修复"（= 我们的 playbook 原则）</div></div>
         </div>
-        <div class="callout" style="margin-top:14px"><b>共性：</b>LLM-proposes-edits + evaluator-scores 的递归自改。<b>我们 = 这条线 + CrossFit 的 held-out 把关。</b></div>
       </main>
       <footer class="footerline"><span>三个项目</span><div class="progress"><div class="bar"></div></div><span class="counter"></span></footer>
     </section>
