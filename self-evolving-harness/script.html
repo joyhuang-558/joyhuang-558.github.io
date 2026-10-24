@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Speaker Script — Self-Evolving Harness</title>
+<style>
+  :root {
+    --bg: #f7f4ee;
+    --ink: #1f2933;
+    --muted: #5b6672;
+    --line: #e2ddd1;
+    --panel: #fffdfa;
+    --blue: #245f73;
+    --green: #2f6b55;
+    --red: #a13c35;
+    --amber: #b76b1f;
+    --violet: #6a4c93;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 56px 28px 120px;
+  }
+  header.page {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 8px;
+  }
+  header.page h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+    letter-spacing: -0.01em;
+  }
+  header.page p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .toc {
+    margin: 28px 0 40px;
+    padding: 18px 22px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .toc h2 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); }
+  .toc ol { margin: 0; padding-left: 22px; columns: 2; column-gap: 32px; font-size: 14px; }
+  .toc li { margin: 2px 0; break-inside: avoid; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+
+  section.slide {
+    margin: 0 0 36px;
+    padding: 24px 26px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+  }
+  .kicker {
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  section.slide h3 {
+    margin: 4px 0 2px;
+    font-size: 21px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .num { color: var(--muted); font-weight: 700; }
+  .lang {
+    margin-top: 16px;
+  }
+  .lang .tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 9px;
+    border-radius: 20px;
+    margin-bottom: 7px;
+  }
+  .lang.en .tag { background: #e4eef1; color: var(--blue); }
+  .lang.zh .tag { background: #efe7f3; color: var(--violet); }
+  .lang p { margin: 0; font-size: 16px; color: #2b333c; }
+  .lang.zh p { font-size: 16px; line-height: 1.7; }
+
+  h2.qa-title {
+    margin: 64px 0 8px;
+    font-size: 24px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 12px;
+  }
+  .qa {
+    margin: 22px 0;
+    padding: 20px 24px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--amber);
+    border-radius: 10px;
+  }
+  .qa .qn { font-weight: 800; color: var(--amber); font-size: 13px; letter-spacing: 0.08em; }
+  .qa .q { font-weight: 700; font-size: 16px; margin: 6px 0 2px; color: var(--ink); }
+  .qa .q.zh { font-weight: 600; color: #3a434d; }
+  .qa .a-tag { display:inline-block; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; color: var(--green); margin-top: 12px; }
+  .qa .a { margin: 2px 0 0; font-size: 15px; color: #2b333c; }
+  .qa .a.zh { line-height: 1.7; }
+  hr.sep { border: none; border-top: 1px dashed var(--line); margin: 14px 0; }
+  code { background: #efeadf; padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="page">
+  <h1>Speaker Script — Self-Evolving Harness</h1>
+  <p>Bilingual presenter notes (English / 中文) · 16 slides + anticipated Q&amp;A · BIRD text-to-SQL, split B reporting</p>
+</header>
+
+<nav class="toc">
+  <h2>Slides</h2>
+  <ol>
+    <li><a href="#s1">Title</a></li>
+    <li><a href="#s2">The Setup</a></li>
+    <li><a href="#s3">Prior Art</a></li>
+    <li><a href="#s4">The Lever</a></li>
+    <li><a href="#s5">The Trap</a></li>
+    <li><a href="#s6">The Playbook</a></li>
+    <li><a href="#s7">The Split</a></li>
+    <li><a href="#s8">The Loop</a></li>
+    <li><a href="#s9">e0 &rarr; h1</a></li>
+    <li><a href="#s10">The Data Is Broken</a></li>
+    <li><a href="#s11">Corrected</a></li>
+    <li><a href="#s12">e0 Trace &rarr; e1</a></li>
+    <li><a href="#s13">e1 Trace &rarr; e2</a></li>
+    <li><a href="#s14">Results</a></li>
+    <li><a href="#s15">Safety</a></li>
+    <li><a href="#s16">References</a></li>
+  </ol>
+</nav>
+
+<!-- SLIDE 1 -->
+<section class="slide" id="s1">
+  <div class="kicker">Self-Evolving Harness</div>
+  <h3><span class="num">01 ·</span> A strong model iterates on a small model's <em>harness</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>The one-sentence version of this talk: I take a strong model and let it iteratively rewrite the <em>harness</em> around a small, frozen model. The harness is everything we wrap around a fixed set of weights — the prompt, the tools, the loop, context management, and the submission logic. I am not touching the small model at all; I am asking how far you can get by only changing how it works, not what it is. The testbed is BIRD text-to-SQL, with SWE-efficiency as a generalization check. Let me set up exactly who edits what.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>这个 talk 一句话就能说清楚：我拿一个强模型，让它反复去改写一个小模型外面的 harness，而这个小模型本身是冻住的。所谓 harness，就是我们套在固定权重外面的所有东西——prompt、工具、循环、上下文管理、还有提交逻辑。我完全不碰小模型本身，我问的是：只改它的工作方式、不改它本身，到底能走多远。主战场是 BIRD text-to-SQL，再用 SWE-efficiency 来验证泛化。下面我先把"谁改谁"讲清楚。</p>
+  </div>
+</section>
+
+<!-- SLIDE 2 -->
+<section class="slide" id="s2">
+  <div class="kicker">The Setup</div>
+  <h3><span class="num">02 ·</span> Humans edit the evolver. The evolver edits the <em>harness</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>There are three roles, and the separation is the whole point. The human owns only the methodology — what material, what tools, what criteria the evolver gets. The evolver is GLM-5.3: it reads the executor's failed traces, diagnoses them, and rewrites the harness. The executor is qwen3.6-35b-a3b, frozen, running inside that harness. The rule I hold myself to is that humans never touch the executor's harness directly — if I want a better harness, I have to make a better evolver. So the real research question isn't "what's the best prompt," it's "how do you change a harness well."</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>这里有三个角色，而它们之间的隔离就是整件事的核心。人类只负责方法论——给 evolver 什么材料、什么工具、什么判据。evolver 是 GLM-5.3，它读 executor 失败的轨迹，做诊断，然后改写 harness。executor 是 qwen3.6-35b-a3b，冻住的，就在这个 harness 里跑。我给自己定的铁律是：人类绝不直接动 executor 的 harness——我想要更好的 harness，就只能去做一个更好的 evolver。所以真正的研究问题不是"最好的 prompt 是什么"，而是"怎么才算把 harness 改好了"。</p>
+  </div>
+</section>
+
+<!-- SLIDE 3 -->
+<section class="slide" id="s3">
+  <div class="kicker">Prior Art</div>
+  <h3><span class="num">03 ·</span> Three projects, three ways to change a harness.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>This idea doesn't come from nowhere — there's a small but real line of work on evolving the harness of a frozen model. Harness-squared, from Google and Northwestern, recursively evolves the harness and reports plus-eleven-point-eight. Meta-Harness, from Stanford's IRIS lab, does an automatic search over the context-management harness. And Better-Harness does evidence-bounded, scoped repairs — the smallest fix per problem. The useful way to read them is along three axes: what layer you edit, what signal you trust, and how big a change you allow each step. My design makes a specific choice on all three.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>这个想法不是凭空来的——"进化冻结模型的 harness"已经有一条小而扎实的研究线。Google 和西北大学的 Harness-squared，递归地进化 harness，报了 +11.8。斯坦福 IRIS lab 的 Meta-Harness，对上下文管理那层 harness 做自动搜索。Better-Harness 则是"证据受限、范围收窄"的修补——每个问题只做最小的那一处修改。看它们最有用的方式是三个轴：改哪一层、信哪种信号、每一步允许多大的改动。我的设计在这三个轴上都做了明确的取舍。</p>
+  </div>
+</section>
+
+<!-- SLIDE 4 -->
+<section class="slide" id="s4">
+  <div class="kicker">The Lever</div>
+  <h3><span class="num">04 ·</span> Same model, new harness, <em>new rank</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>Why bet on the harness at all? Because the evidence says the harness is a real lever, not a rounding error. LangChain's "anatomy of an agent harness" frames the agent as model plus harness, and their harness-engineering write-up took a coding agent from roughly top-thirty to top-five — purely by adding self-verification, trace, and context management, with the model unchanged. Google Research's "small models, big results" shows that decomposition lets small on-device models match much larger ones, where prompt tweaks alone fall short. The pattern across all of them is the same: small models especially need tools, workflow, verification, and context — mechanism, not better wording.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>为什么要赌 harness？因为证据表明 harness 是一个真杠杆，不是四舍五入的误差。LangChain 的"agent harness 解剖"把 agent 定义成"模型加 harness"，他们那篇 harness engineering 的文章，在模型不变的前提下，靠加自我验证、轨迹和上下文管理，把一个 coding agent 从大概 top-30 推到 top-5。Google Research 的"小模型，大成果"则表明：靠任务分解，端侧小模型能追平大得多的模型，而光调 prompt 是做不到的。所有这些案例的规律是一致的：小模型尤其需要工具、工作流、验证和上下文——靠的是机制，不是更漂亮的措辞。</p>
+  </div>
+</section>
+
+<!-- SLIDE 5 -->
+<section class="slide" id="s5">
+  <div class="kicker">The Trap</div>
+  <h3><span class="num">05 ·</span> Self-evolution <em>overfits to its own criteria</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>The obvious failure mode of any self-evolving system is that it games itself. The CrossFit work — "False Frontiers" — diagnoses this precisely: a proposer and a solver end up reinforcing each other's errors, and you get an impressive-looking frontier that's really just co-cheating. Their fix is a cross-fit, held-out reward: the selection signal comes from data the system never trained or tuned on. I take that honestly. The non-negotiable is that the accept-or-reject signal must come from data the evolver has never seen — otherwise every number on the next ten slides is contaminated.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>任何自我进化系统最明显的失败模式，就是它把自己给刷了。CrossFit 那篇工作——"False Frontiers"——把这点诊断得很准：proposer 和 solver 最后会互相强化对方的错误，你得到一条看起来很漂亮的前沿，其实只是两边合谋作弊。他们的解法是 cross-fit 的留出奖励：选择信号来自系统从没训练、也没调过的数据。我老老实实照搬这一点。不可妥协的红线是：accept/reject 的信号必须来自 evolver 从没见过的数据——否则后面十页的每一个数字都是被污染的。</p>
+  </div>
+</section>
+
+<!-- SLIDE 6 -->
+<section class="slide" id="s6">
+  <div class="kicker">The Playbook</div>
+  <h3><span class="num">06 ·</span> The evolver follows a <em>six-step playbook</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>I don't let the evolver improvise freely; I hand it an explicit playbook of six principles. Diagnose by failure mode, not by vibe. For small models, prefer mechanism over persuasion — build the scaffold, don't just exhort. Change one thing at a time. Self-verify before accepting. Let the holdout decide. And intervene only on a confirmed problem — don't fix things that aren't broken. These aren't decorative; each one maps directly to a hole I later found in the evolver's own traces, which is how the evolver itself got improved.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>我不让 evolver 自由发挥，而是给它一份明确的六条原则 playbook。按失败模式做诊断，别凭感觉。对小模型，机制优先于劝说——把脚手架搭好，别光靠嘴劝。一次只改一处。接受之前先自我验证。让留出集来定夺。还有，只对已确认的问题动手——别去修没坏的东西。这些不是摆设；每一条后来都精确对应到我在 evolver 自己轨迹里找到的一个漏洞，而这正是 evolver 本身被改进的方式。</p>
+  </div>
+</section>
+
+<!-- SLIDE 7 -->
+<section class="slide" id="s7">
+  <div class="kicker">The Split</div>
+  <h3><span class="num">07 ·</span> Keep a set the evolver <em>never touches</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>Here's how I operationalize the held-out rule. I split the corrected BIRD set three ways: A is 150 items, B is 150, C is 198. A is the evolver's learning set — its <code>run_candidate</code> tool can only run on A. B is held-out: it decides accept-or-reject, and the evolver can neither see it nor run on it. C is final: it plays no part in selection and is measured exactly once, after everything is frozen. The single most important property is that the evolver cannot see the data that judges it.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>我把留出这条规矩落到实处是这样的。我把修正后的 BIRD 集合三分：A 是 150 条，B 是 150 条，C 是 198 条。A 是 evolver 的学习集——它的 <code>run_candidate</code> 工具只能在 A 上跑。B 是留出集：它决定 accept/reject，evolver 既看不到也不能在上面跑。C 是最终集：它完全不参与选择，只在一切都冻住之后测一次。最重要的一条性质就是：evolver 看不到那份评判它的数据。</p>
+  </div>
+</section>
+
+<!-- SLIDE 8 -->
+<section class="slide" id="s8">
+  <div class="kicker">The Loop</div>
+  <h3><span class="num">08 ·</span> Propose on A, <em>decide</em> on B.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>The loop itself is a concrete RSI cycle. I measure the current harness, then build the material: split-A failures, each item's gold SQL next to qwen's SQL, and the full trajectories. GLM then runs as an improvement engineer in a sandbox whose only lever is <code>run_candidate</code>, which can test candidate harnesses on A. The resulting candidate is then scored on held-out B, and B — not A — decides accept or reject. This is exactly CrossFit's held-out reward made concrete: the thing that proposes never touches the thing that judges.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>循环本身是一个具体的 RSI 周期。我先测当前 harness，然后攒材料：split-A 的失败项、每一条的 gold SQL 和 qwen 的 SQL 并排、以及完整轨迹。GLM 随后以"改进工程师"的身份在一个沙箱里跑，它唯一的杠杆是 <code>run_candidate</code>，只能在 A 上测候选 harness。得到的候选再到留出集 B 上打分，由 B——而不是 A——来决定接受还是拒绝。这正是把 CrossFit 的留出奖励落地：提出方从不碰评判方。</p>
+  </div>
+</section>
+
+<!-- SLIDE 9 -->
+<section class="slide" id="s9">
+  <div class="kicker">e0 &rarr; h1</div>
+  <h3><span class="num">09 ·</span> First evolution: <em>79.78 &rarr; 88</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>First real result. The baseline h0 is deliberately minimal — a one-line system prompt, a task prompt, two tools plus a read-only SQL helper, and a plain full-history loop, under a fixed budget of forty model calls and nine hundred seconds. Its EX on split B is 79.78. With the base evolver e0, the first evolved harness h1 lands around 88. The diagnosis that drove it was output shape: qwen wraps a ROUND where the raw value is wanted, returns results as TEXT, concatenates a full name with double-pipe, maps values to Yes/No. But here's the honest headline — most of the gain came not from those pinpoint fixes, but from two side mechanisms: an executable fallback and a pre-submission execution check.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>第一个真正的结果。基线 h0 是刻意做得最小的——一行 system prompt、一个任务 prompt、两个工具加一个只读 SQL helper、一个朴素的全历史循环，预算固定为 40 次模型调用、900 秒。它在 split B 上的 EX 是 79.78。用基础 evolver e0，第一个进化出来的 harness h1 落在 88 左右。推动它的诊断是"结果形状"：qwen 在该给原始值的地方套了个 ROUND、把结果返回成 TEXT、用双竖线拼出一个全名、把值映射成 Yes/No。但老实说，真正的大头不是这些精准修复——而是两个"副机制"：一个可执行的兜底，和一个提交前的执行检查。</p>
+  </div>
+</section>
+
+<!-- SLIDE 10 -->
+<section class="slide" id="s10">
+  <div class="kicker">The Data Is Broken</div>
+  <h3><span class="num">10 ·</span> The benchmark itself is <em>broken</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>Before I trust any of these numbers, I have to tell you the benchmark's dirty secret: the original BIRD dev gold is wrong often enough to cap every model. Three examples. One asks for products consumed in September 2013, but the transactions table only covers a few days in August 2012 — the correct answer is empty, yet the gold returns 976 rows. Another computes a share as 12.98% because the gold double-counts cards per translation; the correct per-card answer is 47.96%. A third is genuinely ambiguous on what counts as a charter school. Across the dev set that's roughly 70 annotation errors, which is why I don't evaluate on the raw gold at all.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>在我让你信任任何数字之前，我得先把这个 benchmark 的脏秘密讲出来：原始 BIRD dev gold 错得够多，足以给每个模型封顶。三个例子。一题问 2013 年 9 月消费的产品，但 transactions 表只覆盖 2012 年 8 月那几天——正确答案是空集，而 gold 却返回了 976 行。另一题算出的占比是 12.98%，因为 gold 按翻译把每张卡重复计数了；而正确的"按卡"答案是 47.96%。第三题在"什么算 charter school"上是真的有歧义。整个 dev 集这样的标注错误大约有 70 处，这就是为什么我根本不在原始 gold 上做评测。</p>
+  </div>
+</section>
+
+<!-- SLIDE 11 -->
+<section class="slide" id="s11">
+  <div class="kicker">Corrected</div>
+  <h3><span class="num">11 ·</span> On broken labels, <em>Opus &asymp; qwen</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>The consequence of broken labels is subtle but damning: on the original gold, a much stronger model scores about the same as the small one, because the label errors cap everyone at the same ceiling. Capability only becomes visible on clean data. So I switch entirely to the Arcwise-Plat corrected set — 498 questions — and every number from here on is on the corrected gold. If you take one methodological point from this talk, it's that you cannot measure harness improvements on a benchmark whose ceiling is noise.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>标签坏掉的后果很微妙但很致命：在原始 gold 上，一个强得多的模型和小模型打出的分差不多，因为标注错误把所有人都封在同一个天花板下。能力只有在干净数据上才看得出来。所以我整体切到 Arcwise-Plat 的修正集——498 题——从这里开始每一个数字都是在修正后的 gold 上。如果这个 talk 你只带走一条方法论，那就是：你没法在一个天花板本身是噪声的 benchmark 上衡量 harness 的改进。</p>
+  </div>
+</section>
+
+<!-- SLIDE 12 -->
+<section class="slide" id="s12">
+  <div class="kicker">e0 Trace &rarr; e1</div>
+  <h3><span class="num">12 ·</span> The traces point to <em>three holes</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>Now the nested loop: I improve the evolver by reading the evolver's own session traces. Three holes showed up in e0. First, it spent its whole budget exploring and got cut off before submitting — so e1 prepends a live budget banner, steps and minutes left on every command result, plus more session time. Second, it was fed compressed trace summaries, so its diagnoses were vague — e1 copies the full untruncated A trajectories into the sandbox so GLM digs with its own shell. Third, it burned reasoning guessing how it was scored — so e1 provides a scoring contract: the EX comparison rules in prose, with no grader Python and no answers, specifically to avoid leakage and gaming.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>现在是那个嵌套的循环：我通过读 evolver 自己的会话轨迹来改进 evolver。e0 里暴露了三个洞。第一，它把预算全花在探索上，还没提交就被截断了——所以 e1 在每条命令结果前都挂一个实时预算横幅，剩几步、剩几分钟，再加上更多会话时间。第二，喂给它的是压缩过的轨迹摘要，所以诊断很含糊——e1 把完整、未截断的 A 轨迹拷进沙箱，让 GLM 用自己的 shell 去挖。第三，它花大量推理去猜自己是怎么被打分的——所以 e1 给它一份评分契约：用自然语言写的 EX 比较规则，不给评分器 Python，也不给答案，专门为了防泄漏、防刷分。</p>
+  </div>
+</section>
+
+<!-- SLIDE 13 -->
+<section class="slide" id="s13">
+  <div class="kicker">e1 Trace &rarr; e2</div>
+  <h3><span class="num">13 ·</span> Score went up, but it broke questions it <em>used to get right</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>The e1 traces exposed a different failure: the score went up overall, but the gate's blanket checks over-corrected and broke questions that used to pass — classic false positives. So e2 adds regression material as a first-class input: the split-A items the last accepted change broke, each shown as the question, the parent harness's correct SQL, and the current wrong SQL. I also add the playbook principle "intervene only on a confirmed problem," and run multiple iterations. Importantly, the regression set is still built from A only — I never leak B to find the regressions.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>e1 的轨迹暴露了另一种失败：总分涨了，但 gate 那些一刀切的检查矫枉过正，把本来能过的题搞挂了——典型的假阳性。所以 e2 把回归材料当成一等输入：上一次被接受的改动搞坏的那些 split-A 条目，每条都展示为"问题 + 父 harness 的正确 SQL + 当前的错误 SQL"。我还加上了 playbook 的那条原则"只对已确认的问题动手"，并且跑多轮迭代。要紧的是，回归集仍然只从 A 里构造——我绝不会为了找回归而泄漏 B。</p>
+  </div>
+</section>
+
+<!-- SLIDE 14 -->
+<section class="slide" id="s14">
+  <div class="kicker">Results</div>
+  <h3><span class="num">14 ·</span> <em>Plateau</em> after h1.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>Here's the full picture on split B. h0 is 79.78 across all versions. The first evolved harness h1 is 88, 86, and 83.78 for evolvers e0, e1, e2 respectively — and then everything plateaus: the h2 and h3 candidates were gate-rejected for net regressions. Opus 5.5 sits at a practical ceiling of 90 on this corrected data, and the residual gap to 100 is just gold ambiguity. Two honest caveats. Each version ran once, so 88 / 86 / 83.78 is within sampling variance — e1 alone is plus-or-minus three-and-a-half — so do not read that as a ranking. The robust finding is not who won; it's what they converged on.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>这是 split B 上的全貌。h0 在所有版本上都是 79.78。第一个进化出的 harness h1，在 evolver e0、e1、e2 下分别是 88、86、83.78——然后就全线进入平台期：h2 和 h3 的候选都因为净回归被 gate 拒掉了。Opus 5.5 在这份修正数据上的实际天花板是 90，剩下到 100 的差距纯粹是 gold 的歧义。两条老实话。每个版本只跑了一次，所以 88 / 86 / 83.78 都在采样方差之内——光 e1 就有正负三点五——所以别把它读成排名。真正稳健的发现不是谁赢了，而是它们收敛到了什么上。</p>
+  </div>
+</section>
+
+<!-- SLIDE 15 -->
+<section class="slide" id="s15">
+  <div class="kicker">Safety</div>
+  <h3><span class="num">15 ·</span> Two <em>red lines</em>.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>Two red lines keep this honest. On leakage: B is used for accept-or-reject, but it stays invisible to the evolver — the gold answers are provided for scoring, but the gold trajectories are withheld, so there's nothing to imitate. On network: given full network access, the GLM evolver went online zero times across seventy-nine shell commands — zero curl calls. Network bought no gain and brought a whole class of leakage and reproducibility risk, so the entire thing runs offline. Offline costs nothing here and removes a category of failure.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>两条红线让这件事保持诚实。关于泄漏：B 用于 accept/reject，但对 evolver 始终不可见——gold 答案给出来用于打分，但 gold 轨迹扣住不给，所以根本没有可模仿的东西。关于网络：在给了完整网络访问的情况下，GLM evolver 在 79 条 shell 命令里上网 0 次——0 次 curl。联网没带来任何收益，却带来一整类泄漏和可复现性风险，所以整件事都离线跑。在这里离线零成本，还直接消掉一整类失败。</p>
+  </div>
+</section>
+
+<!-- SLIDE 16 -->
+<section class="slide" id="s16">
+  <div class="kicker">References</div>
+  <h3><span class="num">16 ·</span> References.</h3>
+  <div class="lang en">
+    <span class="tag">EN</span>
+    <p>To close, the shoulders I stand on: Harness-squared, Meta-Harness, and Better-Harness for evolving a frozen model's harness; the two LangChain harness-engineering pieces; Google Research's "small models, big results"; and CrossFit / False Frontiers for the held-out reward that keeps self-evolution honest. The data is Arcwise-Plat corrected BIRD, 498 questions. And the whole thesis fits on one line: freeze the model, evolve the harness, and let held-out decide. I'm happy to go deeper on any of it.</p>
+  </div>
+  <div class="lang zh">
+    <span class="tag">中文</span>
+    <p>最后，我站在的这些肩膀：进化冻结模型 harness 的 Harness-squared、Meta-Harness、Better-Harness；LangChain 那两篇 harness engineering；Google Research 的"小模型，大成果"；以及给自我进化上诚实锁的 CrossFit / False Frontiers 的留出奖励。数据是 Arcwise-Plat 修正版 BIRD，498 题。整个主旨一行就够：冻住模型，进化 harness，让留出集定夺。任何一块我都很乐意再往深讲。</p>
+  </div>
+</section>
+
+<!-- ================= Q&A ================= -->
+<h2 class="qa-title">Likely Questions / 可能被问的问题</h2>
+
+<!-- Q1 -->
+<div class="qa">
+  <div class="qn">Q1</div>
+  <div class="q">The single strongest result is the convergence, not a leaderboard number. Can you state it precisely?</div>
+  <div class="q zh">你最强的结果其实是"收敛"，而不是某个榜单数字。能不能精确地说一遍？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">All three evolver versions — e0, e1, e2 — independently diagnosed the same dominant failure mode, result shape: SQL that's semantically right but shaped wrong, like an unasked ROUND, extra helper columns, two name columns merged with double-pipe, a 0/1 flag rewritten as Yes/No, or a LIMIT dropping rows. And all three independently converged on the same two-part fix: a prompt output-contract plus a submit-time bounce-once verification gate. They even implemented the gate differently — e0 as execute-then-self-check, e1 as a zero-false-positive static lint, e2 as an execution gate that reruns the final SQL — which makes the convergence more convincing, not less.</p>
+  <p class="a zh">三个 evolver 版本——e0、e1、e2——都各自独立地诊断出了同一个主导失败模式，也就是"结果形状"：SQL 语义对、但形状错，比如没要求的 ROUND、多余的辅助列、用双竖线拼起来的两列姓名、把 0/1 标志改写成 Yes/No、或者一个 LIMIT 砍掉了行。而且三者都独立收敛到同一个两段式修复：一个 prompt 输出契约，加一个提交时"回弹一次"的验证 gate。它们连 gate 的实现都不一样——e0 是"先执行再自查"，e1 是"零假阳性的静态 lint"，e2 是"重跑最终 SQL 的执行 gate"——这反而让收敛更可信，而不是更弱。</p>
+</div>
+
+<!-- Q2 -->
+<div class="qa">
+  <div class="qn">Q2</div>
+  <div class="q">You admit the evolver's per-item fix predictions mostly didn't come true. Doesn't that undercut the whole method?</div>
+  <div class="q zh">你承认 evolver 的逐条修复预测大多没兑现。这不就把整个方法给推翻了吗？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">It reframes it, it doesn't undercut it. Of roughly eleven to fourteen pinpoint predictions, only about two actually materialized — the gain came diffusely from the gate-plus-contract bundle, not from any specific diagnosis landing. The striking part is that all three GLM sessions independently wrote the same meta-lesson in their own traces: judge a change by its full-run net effect, not by whether the diagnosis predicted the specific fix. So the method's value isn't precognition about individual items; it's that it reliably builds the right structural mechanism and then lets the holdout, not the story, decide.</p>
+  <p class="a zh">这是重新定义它，而不是推翻它。大约 11 到 14 条精准预测里，真正兑现的只有大概 2 条——收益是弥散地来自"gate 加契约"这个组合包，而不是靠某条具体诊断命中。真正有意思的是：三个 GLM 会话都在各自轨迹里独立写下了同一条元教训——评判一个改动要看它整轮跑下来的净效果，而不是看诊断有没有预测对那条具体修复。所以这个方法的价值不在于对单条题目的"预知"，而在于它能稳定地搭出正确的结构性机制，然后让留出集、而不是那套说辞，来定夺。</p>
+</div>
+
+<!-- Q3 -->
+<div class="qa">
+  <div class="qn">Q3</div>
+  <div class="q">88 vs 86 vs 83.78 — isn't e0 just the best evolver, so why bother with e1 and e2?</div>
+  <div class="q zh">88 比 86 比 83.78——是不是 e0 就是最好的 evolver，那还做 e1、e2 干嘛？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">No — I'd push back on reading that as a ranking at all. Each version ran exactly once, and those three numbers sit inside run-to-run sampling noise; e1 alone carries a plus-or-minus three-and-a-half band, which already spans the spread. So it is not statistically significant that e0 "won." The reason e1 and e2 matter isn't a higher score; it's that they close specific process holes I saw in the traces — budget exhaustion, vague diagnoses, grader-guessing, and regressions — which makes the evolver more trustworthy and more legible, independent of the headline number.</p>
+  <p class="a zh">不是——我会直接反对把它当排名看。每个版本只跑了一次，这三个数字都落在"跑与跑之间"的采样噪声里；光 e1 就带着正负三点五的区间，这个区间本身就覆盖了它们的差距。所以"e0 赢了"在统计上并不显著。做 e1、e2 的理由不是更高的分，而是它们堵上了我在轨迹里看到的具体流程漏洞——预算耗尽、诊断含糊、猜评分器、以及回归——这让 evolver 更可信、也更可读，和那个头条数字无关。</p>
+</div>
+
+<!-- Q4 -->
+<div class="qa">
+  <div class="qn">Q4</div>
+  <div class="q">How do you know this evolver isn't just SQL-specific pattern-matching?</div>
+  <div class="q zh">你怎么知道这个 evolver 不只是针对 SQL 的模式匹配？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">Because I pointed the exact same, unchanged evolver at a completely different task — SWE-efficiency, where you optimize real Python repos for runtime speedup while keeping the tests green, scored as a speedup ratio against a gold patch. With no SQL hints, it independently diagnosed qwen's "analysis paralysis": the agent profiles and explores but never actually edits /testbed, so it submits an empty patch and scores the floor. And then it independently re-invented the pre-submit verification gate — the same mechanism it had found on SQL. That cross-task convergence is the strongest evidence that the evolver is task-general, not a SQL trick.</p>
+  <p class="a zh">因为我把一模一样、没做任何改动的 evolver 指向了一个完全不同的任务——SWE-efficiency：优化真实的 Python 仓库来提升运行速度、同时保证测试通过，打分是相对 gold patch 的加速比。在没有任何 SQL 提示的情况下，它独立诊断出了 qwen 的"分析瘫痪"：agent 一直 profile、一直探索，却从不真正去改 /testbed，于是交了个空 patch、拿了地板分。然后它又独立地重新发明了提交前的验证 gate——正是它在 SQL 上找到的那个机制。这种跨任务的收敛，是"这个 evolver 是通用的、不是 SQL 把戏"的最强证据。</p>
+</div>
+
+<!-- Q5 -->
+<div class="qa">
+  <div class="qn">Q5</div>
+  <div class="q">Your gate just re-executes the SQL. Isn't that leaking the answer, or specific to databases?</div>
+  <div class="q zh">你的 gate 不就是重跑一遍 SQL 吗？那是不是在泄漏答案，或者只对数据库有用？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">It doesn't leak the answer, because it never sees the reference — it executes the candidate's own SQL and checks the shape and plausibility of its result against the question, not against the gold. Think of it as self-consistency, not an oracle. And it's not database-specific: the same mechanism showed up on SWE-efficiency as a pre-submit check that the patch actually edits the repo and keeps tests green. The general principle is "verify your own output before you commit it," and that's exactly why it transferred.</p>
+  <p class="a zh">它不泄漏答案，因为它从不看参考解——它执行的是候选自己产出的 SQL，然后对照问题去检查结果的形状和合理性，而不是对照 gold。可以把它理解成"自洽性检查"，而不是一个 oracle。而且它不是数据库专属的：同样的机制在 SWE-efficiency 上表现为"提交前检查 patch 确实改了仓库、且测试还绿着"。通用原则就是"提交前先验证你自己的输出"，这正是它能迁移过去的原因。</p>
+</div>
+
+<!-- Q6 -->
+<div class="qa">
+  <div class="qn">Q6</div>
+  <div class="q">Why report split B and not split C? Isn't the final held-out set the fair number?</div>
+  <div class="q zh">为什么报 split B 不报 split C？最终留出集不才是公平的数字吗？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">B is the right set to quote the improvement on, because B is what the loop actually optimizes against for accept-or-reject, so it's the apples-to-apples comparison across versions. C I measure exactly once, but it turned out to be an easier slice — h0 already scores around 86 there — so quoting C would understate the gain, not validate it. I'd rather report the conservative, consistent number on B than cherry-pick an easier split. A rigorous three-run evaluation is being finalized to put error bars on all of this.</p>
+  <p class="a zh">B 才是报改进该用的集合，因为 B 正是循环真正用来 accept/reject 做优化的那一份，所以它是跨版本的同口径比较。C 我只测一次，但它恰好是更容易的一片——h0 在上面就已经约 86 分——所以拿 C 来报会低估收益，而不是验证收益。我宁愿报 B 上那个保守、一致的数字，也不去挑一个更容易的 split。一个严格的三次重复评测正在收尾，会给这些都配上误差棒。</p>
+</div>
+
+<!-- Q7 -->
+<div class="qa">
+  <div class="qn">Q7</div>
+  <div class="q">Everything plateaus after h1. Why — did the method run out of ideas?</div>
+  <div class="q zh">一切在 h1 之后都平台化了。为什么——方法没点子了吗？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">It's less "out of ideas" and more "the gate held the line." The h2 and h3 candidates were gate-rejected because they were net regressions on held-out B — the loop correctly refused to accept changes that didn't actually help. Part of the plateau is also the ceiling: Opus 5.5 tops out near 90 on this corrected data, and the residual gap to 100 is irreducible gold ambiguity, so there isn't much headroom above 88 to begin with. The plateau is the selection mechanism working, not failing.</p>
+  <p class="a zh">与其说是"没点子了"，不如说是"gate 守住了底线"。h2 和 h3 的候选之所以被 gate 拒掉，是因为它们在留出集 B 上是净回归——循环正确地拒绝接受那些其实没帮助的改动。平台期还有一部分是天花板问题：Opus 5.5 在这份修正数据上也就到 90 左右，剩下到 100 的差距是不可消除的 gold 歧义，所以 88 往上本来就没多少空间。这个平台期是选择机制在起作用，不是它失灵了。</p>
+</div>
+
+<!-- Q8 -->
+<div class="qa">
+  <div class="qn">Q8</div>
+  <div class="q">You corrected 70 gold errors yourself. How do I know your corrections aren't just tuned to help your harness?</div>
+  <div class="q zh">那 70 个 gold 错误是你自己改的。我怎么知道你的修正不是为了帮你的 harness 调出来的？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">I didn't hand-correct them to taste — I use the Arcwise-Plat corrected set, 498 items, an external correction, re-run on the official sqlite databases. And the corrections are verifiable from first principles: the September-2013 question returns empty because the transactions table only spans a few days in August 2012; the 12.98-versus-47.96 case is simply a double-count across translations. These are objective SQL facts, not judgment calls tilted toward my harness. The clean set actually makes my job harder, because it's what finally lets a stronger model separate from qwen.</p>
+  <p class="a zh">我不是按喜好手改的——我用的是 Arcwise-Plat 的修正集，498 条，是外部修正，并在官方 sqlite 数据库上重跑过。而且这些修正能从第一性原理上核验：2013 年 9 月那题返回空集，是因为 transactions 表只覆盖 2012 年 8 月那几天；12.98 对 47.96 那例，就是按翻译重复计了数。这些都是客观的 SQL 事实，不是偏向我 harness 的主观判断。干净的集合其实让我的活更难了，因为正是它才终于让强模型和 qwen 拉开差距。</p>
+</div>
+
+<!-- Q9 -->
+<div class="qa">
+  <div class="qn">Q9</div>
+  <div class="q">What stops the evolver from reverse-engineering the grader through the scoring contract?</div>
+  <div class="q zh">有什么能阻止 evolver 通过评分契约反推出 grader？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">The scoring contract is deliberately prose-only: it states the EX comparison semantics — order-insensitive set or multiset match, within-row columns exact, any extra or missing column or rounding or TEXT-versus-numeric mismatch fails — but it ships no grader Python and no answers. I added it precisely because in e0's traces GLM was burning reasoning guessing the rules and risking gaming them; telling it the rules in words removes the incentive to reverse-engineer while giving it nothing executable to overfit to. And the real backstop is structural: even a perfectly reverse-engineered grader doesn't help, because B is scored with answers the evolver never sees and trajectories it's never given.</p>
+  <p class="a zh">评分契约是刻意只用自然语言的：它陈述 EX 的比较语义——顺序无关的集合或多重集匹配、行内各列精确相等、任何多出或缺失的列、或 rounding、或 TEXT 与数值不一致都算失败——但它不附任何评分器 Python，也不附任何答案。我加它恰恰是因为在 e0 的轨迹里，GLM 在猜规则上烧了大量推理、还有刷分的风险；用文字把规则讲清楚，就消掉了反推的动机，同时不给它任何可执行、可过拟合的东西。而真正的兜底是结构性的：就算把 grader 完美反推出来也没用，因为 B 是用 evolver 从没见过的答案、从没拿到的轨迹来打分的。</p>
+</div>
+
+<!-- Q10 -->
+<div class="qa">
+  <div class="qn">Q10</div>
+  <div class="q">What does this cost, and is it practical to run repeatedly?</div>
+  <div class="q zh">这要花多少钱，反复跑现实吗？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">It's cheap enough to iterate on. One full evolver run from h0 to h3 — three iterations — is about 78 minutes and roughly 49 dollars: about 42.5 for the executor and 6.3 for the GLM improver. A single evolve iteration is around 20 to 30 minutes. Doing all three evolver versions came to about 135 dollars total. So this isn't a giant training run; it's a cheap, offline, repeatable loop, which is part of why I'm comfortable treating the holdout strictly rather than cutting corners to save compute.</p>
+  <p class="a zh">便宜到足以反复迭代。一次完整的 evolver 跑，从 h0 到 h3——三轮迭代——大约 78 分钟、约 49 美元：executor 约 42.5，GLM improver 约 6.3。单轮进化迭代约 20 到 30 分钟。把三个 evolver 版本全跑下来总共约 135 美元。所以这不是一个庞大的训练 run，而是一个便宜、离线、可反复的循环——这也是为什么我能严格对待留出集，而不必为省算力而走捷径。</p>
+</div>
+
+<!-- Q11 -->
+<div class="qa">
+  <div class="qn">Q11</div>
+  <div class="q">Why freeze the executor at all? Wouldn't fine-tuning qwen beat harness engineering?</div>
+  <div class="q zh">为什么非要把 executor 冻住？微调 qwen 难道不比做 harness engineering 更强吗？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">Freezing the executor is the experiment, not a limitation. The whole question is how much you gain by changing how a fixed model works, not what it is — and the prior art says that's a large lever: LangChain's harness engineering moved a coding agent from roughly top-30 to top-5 with no weight changes, and decomposition let small models match much larger ones. Harness changes are also cheaper, faster, auditable, and instantly portable across models, whereas fine-tuning re-opens data, reward, and regression risk every time the base model updates. Fine-tuning and harness evolution aren't mutually exclusive — but you want to exhaust the free, frozen-model lever first.</p>
+  <p class="a zh">冻住 executor 是这个实验本身，不是一个限制。整个问题就是：只改一个固定模型的"工作方式"、而不改"它本身"，你能拿到多少收益——而先前工作表明这是个很大的杠杆：LangChain 的 harness engineering 在不动权重的情况下把 coding agent 从大概 top-30 推到 top-5，任务分解也让小模型追平了大得多的模型。harness 改动还更便宜、更快、可审计，并且能瞬间在不同模型间迁移；而微调每次基座一更新，就又要重新面对数据、奖励和回归的风险。微调和 harness 进化并不互斥——但你应该先把"冻结模型"这个免费杠杆用尽。</p>
+</div>
+
+<!-- Q12 -->
+<div class="qa">
+  <div class="qn">Q12</div>
+  <div class="q">If a human still designs the evolver, how is this "self-evolving" rather than just human-in-the-loop prompt engineering?</div>
+  <div class="q zh">如果 evolver 还是人设计的，那这怎么算"自我进化"，而不是人在环里的 prompt engineering？</div>
+  <span class="a-tag">ANSWER / 回答</span>
+  <p class="a">The self-evolution is at the harness layer: the human never edits the executor's harness — the evolver does, autonomously, from traces, inside the loop. What the human touches is one level up, the evolver itself, and even there I only edit it by reading the evolver's own session traces, which is a nested RSI rather than me hand-tuning qwen's prompt. The honest framing is that it's a two-level loop: the inner loop is fully self-evolving against a held-out reward, and the outer loop is a human improving the improver. That separation is deliberate — it's exactly what keeps the self-evolution from co-cheating.</p>
+  <p class="a zh">自我进化发生在 harness 这一层：人类从不编辑 executor 的 harness——是 evolver 在循环里、从轨迹出发、自主地改。人类碰的是上面一层，也就是 evolver 本身，而且即便在那一层，我也只通过读 evolver 自己的会话轨迹来改它，这是一个嵌套的 RSI，而不是我去手调 qwen 的 prompt。老实的说法是：这是一个两层循环——内层针对留出奖励完全自我进化，外层是人在改进"改进者"。这种分层是刻意的——正是它让自我进化不至于合谋作弊。</p>
+</div>
+
+</div>
+</body>
+</html>
